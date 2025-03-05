@@ -19,7 +19,7 @@ class BarangSeeder extends Seeder
                 $data[] = [
                     'kategori_id' => rand(1, 5),
                     'barang_kode' => 'BRG00' . (($i - 1) * 5 + $j),
-                    'barang-nama' => 'Barang ' . (($i - 1) * 5 + $j),
+                    'barang_nama' => 'Barang ' . (($i - 1) * 5 + $j),
                     'harga_beli' => rand(10000, 50000),
                     'harga_jual' => rand(60000, 100000),
                 ];
