@@ -20,24 +20,28 @@ class BarangController extends Controller
         $page = (object) [
             'title' => 'Barang dalam sistem'
         ];
+        $kategori=KategoriModel::all();
 
         $activeMenu = 'barang';
         
-        return view('barang.index', compact('breadcrumb', 'page', 'activeMenu'));
+        return view('barang.index', compact('breadcrumb', 'page','kategori', 'activeMenu'));
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $barang = DB::table('m_barang')
-            ->select(
-                'm_barang.barang_id',
-                'm_barang.barang_kode',
-                'm_barang.barang-nama',
-                'm_barang.harga_beli',
-                'm_barang.harga_jual',
-                'm_kategori.kategori_nama as kategori'
-            )
-            ->join('m_kategori', 'm_kategori.kategori_id', '=', 'm_barang.kategori_id');
+        $barang = BarangModel::select(
+            'barang_id',
+            'barang_kode',
+            'barang-nama',
+            'harga_beli',
+            'harga_jual',
+            'kategori_id'
+        )
+        ->with('kategori');
+
+        if ($request->kategori_id) {
+            $barang = $barang->where('kategori_id', $request->kategori_id);    
+            }
 
         return DataTables::of($barang)
             ->addIndexColumn()
@@ -152,7 +156,21 @@ class BarangController extends Controller
 
     public function destroy($id)
     {
-        BarangModel::destroy($id);
-        return redirect('/barang')->with('success', 'Barang berhasil dihapus');
+        $level = BarangModel::find($id);
+        if (!$level) {
+            return redirect('/barang')->with('error', 'Data barang tidak ditemukan');
+        }
+
+        try {
+            BarangModel::destroy($id);
+            return redirect('/barang')->with('success', 'Data barang berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/barang')->with('error', 'Data barang gagal dihapus karena masih terkait dengan data lain');
+        }
     }
+    // public function destroy($id)
+    // {
+    //     BarangModel::destroy($id);
+    //     return redirect('/barang')->with('success', 'Barang berhasil dihapus');
+    // }
 }

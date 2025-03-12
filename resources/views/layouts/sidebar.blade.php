@@ -46,7 +46,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'user')? 'active' : '' }}">
+        <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier')? 'active' : '' }}">
           <i class="nav-icon fas fa-truck"></i>
           <p>Data Supplier</p>
         </a>
@@ -59,7 +59,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/transaksi') }}" class="nav-link {{ ($activeMenu == 'penjualan')? 'active' : '' }} ">
+        <a href="{{ url('/transaksi') }}" class="nav-link {{ ($activeMenu == 'transaksi')? 'active' : '' }} ">
           <i class="nav-icon fas fa-cash-register"></i>
           <p>Transaksi Penjualan</p>
         </a>

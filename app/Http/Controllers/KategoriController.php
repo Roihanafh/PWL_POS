@@ -123,9 +123,24 @@ class KategoriController extends Controller
 
     public function destroy($id)
     {
-        KategoriModel::destroy($id);
-        return redirect('/kategori')->with('success', 'Kategori berhasil dihapus');
+        $level = KategoriModel::find($id);
+        if (!$level) {
+            return redirect('/kategori')->with('error', 'Data kategori tidak ditemukan');
+        }
+
+        try {
+            KategoriModel::destroy($id);
+            return redirect('/kategori')->with('success', 'Data kategori berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/kategori')->with('error', 'Data kategori gagal dihapus karena masih terkait dengan data lain');
+        }
     }
+
+    // public function destroy($id)
+    // {
+    //     KategoriModel::destroy($id);
+    //     return redirect('/kategori')->with('success', 'Kategori berhasil dihapus');
+    // }
     // public function index()
     // {
         // $data = [

@@ -15,6 +15,22 @@
             @if (session('error'))
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
+            <div class="row">
+                <div class="col-ms-12">
+                    <div class="form-group row">
+                        <label class="col-4 control-label col-form-label">Filter :</label>
+                        <div class="col-8">
+                            <select name="kategori_id" id="kategori_id" class="form-control" required>
+                                <option value="">- Semua -</option>
+                                @foreach ($kategori as $item)
+                                    <option value="{{ $item->kategori_id }}">{{ $item->kategori_nama }}</option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">Kategori Barang</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table class="table table-bordered table-striped table-hover table-sm" id="table_barang"> 
                 <thead> 
                     <tr>
@@ -43,7 +59,10 @@
                 ajax: {
                     "url": "{{ url('barang/list') }}",
                     "dataType": "json",
-                    "type": "POST"
+                    "type": "POST",
+                    "data": function(d) {
+                        d.kategori_id = $('#kategori_id').val();
+                    }
                 },
                 columns: [
                     {
@@ -75,7 +94,10 @@
                         data: "kategori",
                         className: "",
                         orderable: true,
-                        searchable: true 
+                        searchable: true,
+                        render: function (data, type, row) {
+                            return data ? data.kategori_nama : '-';
+                        }
                     }, {
                         data: "aksi",
                         className: "",
@@ -84,6 +106,10 @@
                     }
                 ]
             });
+
+            $('#kategori_id').on('change', function() {
+            dataBarang.ajax.reload();
+        });
         });
     </script>
 @endpush
