@@ -21,6 +21,10 @@
                     <th>Nama Level</th>
                     <td>{{ $level->level_nama }}</td>
                 </tr>
+                <tr>
+                    <th>Kode Level</th>
+                    <td>{{ $level->level_kode }}</td>
+                </tr>
             </table>
         @endempty
         <a href="{{ url('level') }}" class="btn btn-sm btn-default mt-2">Kembali</a>

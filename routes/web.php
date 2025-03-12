@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -70,4 +71,15 @@ Route::group(['prefix' => 'transaksi'], function () {
     Route::get('/', [TransaksiController::class, 'index']); // Menampilkan halaman awal transaksi
     Route::post('/list', [TransaksiController::class, 'list']); // Menampilkan data transaksi dalam bentuk JSON untuk DataTables
     Route::get('/{id}', [TransaksiController::class, 'show']); // Menampilkan detail transaksi
+});
+
+Route::group(['prefix' => 'supplier'], function () {
+    Route::get('/', [SupplierController::class, 'index']); // menampilkan halaman awal stok
+    Route::post('/list', [SupplierController::class, 'list']); // menampilkan data Supplier dalam bentuk json untuk datatables
+    Route::get('/create', [SupplierController::class, 'create']); // menampilkan halaman form tambah Supplier
+    Route::post('/', [SupplierController::class, 'store']); // menyimpan data Supplier baru
+    Route::get('/{id}', [SupplierController::class, 'show']); // menampilkan detail Supplier
+    Route::get('/{id}/edit', [SupplierController::class, 'edit']); // menampilkan halaman form edit Supplier
+    Route::put('/{id}', [SupplierController::class, 'update']); // menyimpan perubahan data arang
+    Route::delete('/{id}', [SupplierController::class, 'destroy']); // menghapus data Supplier
 });

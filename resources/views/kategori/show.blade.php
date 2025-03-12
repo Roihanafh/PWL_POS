@@ -21,6 +21,10 @@
                     <th>Nama Kategori</th>
                     <td>{{ $kategori->kategori_nama }}</td>
                 </tr>
+                <tr>
+                    <th>Kode Kategori</th>
+                    <td>{{ $kategori->kategori_kode }}</td>
+                </tr>
             </table>
         @endempty
         <a href="{{ url('kategori') }}" class="btn btn-sm btn-default mt-2">Kembali</a>

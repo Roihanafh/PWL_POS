@@ -141,7 +141,7 @@ class BarangController extends Controller
             'barang_kode' => 'required|string|max:10|unique:m_barang,barang_kode,'.$id.',barang_id',
             'barang-nama' => 'required|string|max:100',
             'harga_jual' => 'required|numeric',
-            'harga_jual' => 'required|numeric',
+            'harga_beli' => 'required|numeric',
             'kategori_id'=> 'required|integer',
         ]);
 
