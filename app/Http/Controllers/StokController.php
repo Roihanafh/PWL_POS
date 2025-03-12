@@ -79,19 +79,13 @@ class StokController extends Controller
             'supplier_id' => 'required|exists:m_supplier,supplier_id',
             'barang_id' => 'required|exists:m_barang,barang_id',
             'user_id' => 'required|exists:m_user,user_id',
+            'stok_tanggal' => now(),
             'stok_jumlah' => 'required|integer|min:1'
         ]);
-        
-        StokModel::create([
-            'supplier_id' => $request->supplier_id,
-            'barang_id' => $request->barang_id,
-            'user_id' => $request->user_id,
-            'stok_tanggal' => now(), // Tetapkan stok_tanggal di sini
-            'stok_jumlah' => $request->stok_jumlah,
-        ]);
-        
-        return redirect('/stok')->with('success', 'Stok berhasil ditambahkan.');
-        
+
+        StokModel::create($request->only(['supplier_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah']));
+
+        return redirect('/stok')->with('success', 'Stok berhasil ditambahkan');
     }
 
     public function show($id)
@@ -146,17 +140,18 @@ class StokController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'supplier_id' => 'required|exists:m_supplier,supplier_id',
-            'barang_id' => 'required|exists:m_barang,barang_id',
-            'user_id' => 'required|exists:m_user,user_id',
-            'stok_tanggal' => 'required|date',
-            'stok_jumlah' => 'required|integer|min:1'
+            'stok_jumlah' => 'required|integer|min:1',
         ]);
 
-        StokModel::findOrFail($id)->update($request->only(['supplier_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah']));
+        $stok = StokModel::findOrFail($id);
+        $stok->update([
+            'stok_jumlah' => $request->stok_jumlah,
+            'stok_tanggal' => now(),
+        ]);
 
-        return redirect('/stok')->with('success', 'Stok berhasil diperbarui');
+        return redirect('/stok')->with('success', 'Stok berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {
