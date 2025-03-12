@@ -103,7 +103,16 @@ class SupplierController extends Controller
 
     public function destroy($id)
     {
-        SupplierModel::destroy($id);
-        return redirect('/supplier')->with('success', 'Supplier berhasil dihapus');
+        $supplier = SupplierModel::find($id);
+        if (!$supplier) {
+            return redirect('/supplier')->with('error', 'Data supplier tidak ditemukan');
+        }
+
+        try {
+            SupplierModel::destroy($id);
+            return redirect('/supplier')->with('success', 'Data supplier berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/supplier')->with('error', 'Data supplier gagal dihapus karena masih terkait dengan data lain');
+        }
     }
 }

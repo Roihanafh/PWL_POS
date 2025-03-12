@@ -152,10 +152,23 @@ class StokController extends Controller
         return redirect('/stok')->with('success', 'Stok berhasil diperbarui.');
     }
 
-
     public function destroy($id)
     {
-        StokModel::destroy($id);
-        return redirect('/stok')->with('success', 'Stok berhasil dihapus');
+        $stok = StokModel::find($id);
+        if (!$stok) {
+            return redirect('/stok')->with('error', 'Data stok tidak ditemukan');
+        }
+
+        try {
+            StokModel::destroy($id);
+            return redirect('/stok')->with('success', 'Data stok berhasil dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/stok')->with('error', 'Data stok gagal dihapus karena masih terkait dengan data lain');
+        }
     }
+    // public function destroy($id)
+    // {
+    //     StokModel::destroy($id);
+    //     return redirect('/stok')->with('success', 'Stok berhasil dihapus');
+    // }
 }
