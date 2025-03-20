@@ -63,7 +63,7 @@ class TransaksiController extends Controller
             ->join('m_barang', 'm_barang.barang_id', '=', 't_penjualan_detail.barang_id')
             ->select(
                 't_penjualan_detail.detail_id',
-                'm_barang.barang-nama',
+                'm_barang.barang_nama',
                 't_penjualan_detail.harga',
                 't_penjualan_detail.jumlah'
             )

@@ -8,7 +8,7 @@ class BarangModel extends Model {
     use HasFactory;
     protected $primaryKey = 'barang_id';
     protected $table = 'm_barang';
-    protected $fillable = ['barang-nama', 'barang_kode', 'harga_beli', 'harga_jual', 'harga_jual', 'kategori_id' ];
+    protected $fillable = ['barang_nama', 'barang_kode', 'harga_beli', 'harga_jual', 'harga_jual', 'kategori_id' ];
 
     public function kategori(): BelongsTo
     {

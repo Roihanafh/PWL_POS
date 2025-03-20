@@ -48,7 +48,7 @@
                 <tbody>
                     @foreach($detail_penjualan as $detail)
                         <tr>
-                            <td>{{ $detail->{'barang-nama'} }}</td>
+                            <td>{{ $detail->{'barang_nama'} }}</td>
                             <td>{{ $detail->jumlah }}</td>
                             <td>{{ number_format($detail->harga, 0, ',', '.') }}</td>
                             <td>{{ number_format($detail->jumlah * $detail->harga, 0, ',', '.') }}</td>

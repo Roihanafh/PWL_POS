@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                     <th>Nama Barang</th>
-                    <td>{{ $barang->{'barang-nama'} }}</td>
+                    <td>{{ $barang->{'barang_nama'} }}</td>
                 </tr>
                 <tr>
                     <th>Harga Beli</th>
