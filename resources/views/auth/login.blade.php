@@ -31,6 +31,7 @@
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
+              
             </div>
           </div>
           <small id="error-username" class="error-text text-danger"></small>
@@ -56,6 +57,11 @@
           </div>
         </div>
       </form>
+      <p class="mt-3 text-center">
+        Belum punya akun? 
+        <button onclick="modalAction('{{ url('register') }}')" class="btn btn-sm btn-link">Daftar di sini</button>
+      </p>  
+      <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true"></div>    
     </div>
   </div>
 </div>
@@ -73,6 +79,11 @@
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
 <script>
+  function modalAction(url = '') {
+    $('#myModal').load(url, function() {
+      $('#myModal').modal('show');
+    });
+  }
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
