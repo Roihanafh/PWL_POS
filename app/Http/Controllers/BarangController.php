@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use App\Models\BarangModel;
 use App\Models\KategoriModel;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -255,6 +257,19 @@ class BarangController extends Controller
         $writer->save('php://output');
         exit;
     } //end function export_excel
+    public function export_pdf(){
+        $barang = BarangModel::select('kategori_id','barang_kode','barang_nama','harga_beli','harga_jual')
+                    ->orderBy('kategori_id')
+                    ->with('kategori')
+                    ->get();
+        //use Barryvdh\DomPDF\Facade\Pdf;
+        $pdf = FacadePdf::loadView('barang.export_pdf', ['barang' => $barang]);
+        $pdf->setPaper('A4', 'portrait');//set ukuran kertas dan orientasi
+        $pdf->setOption('isRemoteEnabled', true);//set true jika ada gambar dari url
+        $pdf->render();
+
+        return $pdf->stream('Data Barang ' .date('Y-m-d H:i:s').'.pdf');
+    }
 }
 
 
