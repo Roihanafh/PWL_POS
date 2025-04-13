@@ -5,8 +5,11 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
-                <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1" >Tambah ajax</button>
+                <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-info">Import user</button>
+                {{-- <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a> --}}
+                <a href="{{ url('/user/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export user</a>
+                <a href="{{ url('/user/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export user</a>
+                <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-success" >Tambah ajax</button>
             </div>
         </div>
         <div class="card-body">
@@ -32,15 +35,14 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_user"> 
+            <table class="table table-bordered table-sm table-striped table-hover" id="table-user"> 
               <thead> 
-                <tr><th>ID</th><th>Username</th><th>Nama</th><th>
-                Level Pengguna</th><th>Aksi</th></tr> 
+                <tr><th>ID</th><th>Username</th><th>Nama</th><th>Level Pengguna</th><th>Aksi</th></tr> 
               </thead> 
           </table> 
         </div> 
       </div> 
-      <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" databackdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+      <div id="myModal" class="modal fade animate shake" tabindex="-1" data-backdrop="static"data-keyboard="false" data-width="75%"></div>
 @endsection
 
 @push('css')
@@ -54,9 +56,10 @@
             });
         }
 
-        var dataUser;
+        var tableUser;
         $(document).ready(function() {
-            var dataUser = $('#table_user').DataTable({
+            tableUser = $('#table-user').DataTable({
+                processing: true,
                 serverSide: true, // serverSide: true, jika ingin menggunakan server side processing
                 ajax: {
                     "url": "{{ url('user/list') }}",
@@ -88,7 +91,8 @@
                     searchable: false
                 }, {
                     data: "aksi",
-                    className: "",
+                    className: "text-center",
+                    width: "12%",
                     orderable: false, 
                     searchable: false 
                 }
