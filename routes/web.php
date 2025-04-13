@@ -43,6 +43,10 @@ Route::middleware(['auth'])->group(function(){ // artinya semua route di dalam g
             Route::get('/{id}/delete_ajax', [UserController::class,'confirm_ajax']);// untuk tampilan form konfirm user ajax
             Route::delete('/{id}/delete_ajax', [UserController::class,'delete_ajax']);// untuk menghapus data user
             Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
+            Route::get('/import',[UserController::class,'import']); // ajax form upload excel
+            Route::post('/import_ajax',[UserController::class,'import_ajax']); // ajax import excel
+            Route::get('/export_excel',[UserController::class,'export_excel']); // ajax export excel
+            Route::get('/export_pdf',[UserController::class,'export_pdf']); // ajax export pdf
         });
 
         Route::group(['prefix' => 'level'], function () {
@@ -100,6 +104,10 @@ Route::middleware(['auth'])->group(function(){ // artinya semua route di dalam g
             Route::get('/{id}/delete_ajax', [KategoriController::class,'confirm_ajax']);// untuk tampilan form konfirm Kategori ajax
             Route::delete('/{id}/delete_ajax', [KategoriController::class,'delete_ajax']);// untuk menghapus data Kategori
             Route::delete('/{id}', [KategoriController::class, 'destroy']); // menghapus data kategori
+            Route::get('/import',[KategoriController::class,'import']); // ajax form upload excel
+            Route::post('/import_ajax',[KategoriController::class,'import_ajax']); // ajax import excel
+            Route::get('/export_excel',[KategoriController::class,'export_excel']); // ajax export excel
+            Route::get('/export_pdf',[KategoriController::class,'export_pdf']); // ajax export pdf
         });
         Route::group(['prefix' => 'supplier'], function () {
             Route::get('/', [SupplierController::class, 'index']); // menampilkan halaman awal stok
