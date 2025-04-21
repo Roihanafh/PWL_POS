@@ -10,6 +10,10 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 class UserController extends Controller
 {
     //Menampilkan halaman awal user
@@ -414,6 +418,63 @@ class UserController extends Controller
 
         return $pdf->stream('Data User ' .date('Y-m-d H:i:s').'.pdf');
     }
+    public function profil()
+    {
+        return view('user.profil');
+    }
+    public function updateFoto_ajax(Request $request, $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'file_foto' => 'required|image|mimes:jpg,jpeg,png,webp',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            $user = UserModel::find($id);
+            if ($user) {
+                $file = $request->file('file_foto');
+                $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+                $destinationPath = public_path('foto');
+                $file->move($destinationPath, $filename);
+
+                // Hapus foto lama jika ada
+                if ($user->foto) {
+                    $oldFotoPath = public_path('foto/' . $user->foto);
+                    if (file_exists($oldFotoPath)) {
+                        unlink($oldFotoPath);
+                    }
+                }
+
+                // Simpan nama file (bukan path lengkap)
+                $user->update([
+                    'foto' => $filename
+                ]);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Foto profil berhasil diupdate',
+                    'filename' => $filename // <-- Tambahkan ini agar bisa dikirim ke frontend
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data user tidak ditemukan'
+                ]);
+            }
+        }
+
+        return redirect('/');
+    }
+    
+
     // public function tambah(){
     //     return view('user_tambah');
     // }

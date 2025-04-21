@@ -1,3 +1,4 @@
+<div id="myModal" class="modal fade animate shake" tabindex="-1" data-backdrop="static"data-keyboard="false" data-width="75%"></div>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
@@ -14,6 +15,24 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+      @php
+          $foto = Auth::user()->foto ? asset('foto/' . Auth::user()->foto) : asset('default.png');  
+      @endphp
+
+      <!-- User Profile Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <img id="foto-profil" src="{{ $foto }}" alt="User Image" class="img-circle elevation-2" style="width:35px; height:35px; object-fit:cover;">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">{{ Auth::user()->nama }}</span>
+          <div class="dropdown-divider"></div>
+          <button onclick="modalAction('{{ url('user/profil') }}')" class="dropdown-item">
+            <i class="fas fa-user mr-2"></i> Edit Foto Profil
+          </button>
+        </div>
+      </li>
+      
       <!-- Navbar Search -->
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -133,3 +152,12 @@
       </li>
     </ul>
   </nav>
+  @push('js')
+    <script>
+        function modalAction(url = ''){
+                $('#myModal').load(url,function(){
+                $('#myModal').modal('show');
+            });
+        }
+    </script>
+  @endpush

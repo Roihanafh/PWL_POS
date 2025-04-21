@@ -20,12 +20,14 @@ Route::get('logout', [AuthController::class,'logout'])->middleware('auth');
 Route::get('/register', [AuthController::class, 'create_ajax']);
 Route::post('/register', [AuthController::class, 'store_ajax']);
 
+
 Route::middleware(['auth'])->group(function(){ // artinya semua route di dalam group ini harus login dulu }
 
 // masukkan semua route yang perlu autentikasi di sini
 
     Route::get('/', [WelcomeController::class, 'index']);
-
+    Route::get('/user/profil', [UserController::class, 'profil']);
+    Route::post('/user/editFoto/{id}', [UserController::class, 'updateFoto_ajax']);
     
     Route::middleware(['authorize:ADM'])->group(function(){
         Route::group(['prefix' => 'user'], function () {
