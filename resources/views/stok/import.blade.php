@@ -1,21 +1,20 @@
-<form action="{{ url('/barang/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
-    @csrf
+<form action="{{url('/stok/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Import Data Barang</h5>
-            <button type="button" class="close" data-dismiss="modal" arialabel="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title" id="exampleModalLabel">Import Data stok</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Download Template</label>
-                    <a href="{{ asset('template_barang.xlsx') }}" class="btn btn-info btn-sm" download><i class="fa fa-file-excel"></i>Download</a>
-                    <small id="error-kategori_id" class="error-text form-text text-danger"></small>
+                    <a href="{{ asset('template_stok.xlsx') }}" class="btn btn-info btn-sm" download><i class="fa fa-file-excel"></i>Download</a>
+                    <small id="error-stok_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
-                    <input type="file" name="file_barang" id="file_barang" class="form-control" required>
-                    <small id="error-file_barang" class="error-text form-text text-danger"></small>
+                    <input type="file" name="file_stok" id="file_stok" class="form-control" required>
+                    <small id="error-file_stok" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -24,15 +23,16 @@
             </div>
         </div>
     </div>
-</form> 
+</form>
 <script>
     $(document).ready(function() {
         $("#form-import").validate({
             rules: {
-                file_barang: {required: true, extension: "xlsx"},
+                file_stok: {required: true, extension: "xlsx"},
             },
             submitHandler: function(form) {
                 var formData = new FormData(form); // Jadikan form ke FormData untuk menghandle file
+                console.log(formData, form);
                 $.ajax({
                     url: form.action,
                     type: form.method,
@@ -47,7 +47,7 @@
                             title: 'Berhasil',
                             text: response.message
                         });
-                            tableBarang.ajax.reload(); // reload datatable
+                            dataStok.ajax.reload(); // reload datatable
                         }else{ // jika error
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

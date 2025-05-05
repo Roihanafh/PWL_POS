@@ -39,7 +39,7 @@
         @endif
         <table class="table table-bordered table-sm table-striped table-hover" id="table-kategori">
             <thead>
-                <tr><th>ID</th><th>Nama Kategori</th><th>Aksi</th></tr> 
+                <tr><th>ID</th><th>Nama Kategori</th><th>Kode Kategori</th><th>Aksi</th></tr> 
             </thead>
             <tbody></tbody>
         </table>
@@ -65,7 +65,7 @@
                 "type": "POST",
             },
             columns: [{
-                    data: "DT_RowIndex",
+                    data: "kategori_id",
                     className: "text-center",
                     width: "5%",
                     orderable: false,
@@ -73,7 +73,13 @@
                 },{
                     data: "kategori_nama",    
                     className: "",
-                    width: "75%",
+                    width: "40%",
+                    orderable: true,
+                    searchable: true,
+                },{
+                    data: "kategori_kode",    
+                    className: "",
+                    width: "20%",
                     orderable: true,
                     searchable: true,
                 },{

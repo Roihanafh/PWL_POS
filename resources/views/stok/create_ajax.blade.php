@@ -30,12 +30,12 @@
                 </div>
                 <div class="form-group">
                     <label>User</label>
-                    <select name="user_id" id="user_id" class="form-control" required>
-                        <option value="">- Pilih User -</option>
-                        @foreach($user as $u)
-                            <option value="{{ $u->user_id }}">{{ $u->username }}</option>
-                        @endforeach
-                    </select>
+                    <!-- Menyimpan user_id dari user yang sedang login -->
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->user_id }}">                    
+                    <!-- Menampilkan username yang sedang login -->
+                    <input type="text" class="form-control" value="{{ Auth::user()->username }}" readonly>                    
+                    <!-- Penjelasan untuk pengguna -->
+                    <small class="form-text text-muted">User diambil otomatis dari akun yang sedang login.</small>                        
                     <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
@@ -73,7 +73,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            dataStok.ajax.reload();
+                            reloadAfterAdd();
                         }else{
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

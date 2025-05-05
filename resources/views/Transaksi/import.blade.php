@@ -1,16 +1,16 @@
-<form action="{{ url('/barang/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
+<form action="{{ url('/transaksi/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Import Data Barang</h5>
-            <button type="button" class="close" data-dismiss="modal" arialabel="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title" id="exampleModalLabel">Import Data Transaksi</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label>Download Template</label>
-                    <a href="{{ asset('template_barang.xlsx') }}" class="btn btn-info btn-sm" download><i class="fa fa-file-excel"></i>Download</a>
-                    <small id="error-kategori_id" class="error-text form-text text-danger"></small>
+                    <a href="{{ asset('template_transaksi.xlsx') }}" class="btn btn-info btn-sm" download><i class="fa fa-file-excel"></i>Download</a>
+                    <small id="error-transaksi_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Pilih File</label>
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-</form> 
+</form>
 <script>
     $(document).ready(function() {
         $("#form-import").validate({
@@ -47,7 +47,7 @@
                             title: 'Berhasil',
                             text: response.message
                         });
-                            tableBarang.ajax.reload(); // reload datatable
+                            dataTransaksi.ajax.reload(); // reload datatable
                         }else{ // jika error
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

@@ -26,7 +26,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <<div class="form-group">
+                    <div class="form-group">
                         <label>Supplier</label>
                         <select name="supplier_id" id="supplier_id" class="form-control" required>
                             <option value="">- Pilih Supplier -</option>
@@ -50,14 +50,15 @@
                     
                     <div class="form-group">
                         <label>User</label>
-                        <select name="user_id" id="user_id" class="form-control" required>
-                            <option value="">- Pilih User -</option>
-                            @foreach($user as $u)
-                                <option {{ ($u->user_id == $stok->user_id) ? 'selected' : '' }} value="{{ $u->user_id }}">{{ $u->username }}</option>
-                            @endforeach
-                        </select>
+                        <!-- Menyimpan user_id dari user yang sedang login -->
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->user_id }}">                    
+                        <!-- Menampilkan username yang sedang login -->
+                        <input type="text" class="form-control" value="{{ Auth::user()->username }}" readonly>                    
+                        <!-- Penjelasan untuk pengguna -->
+                        <small class="form-text text-muted">User diambil otomatis dari akun yang sedang login.</small>                        
                         <small id="error-user_id" class="error-text form-text text-danger"></small>
                     </div>
+                    
                     
                     <div class="form-group">
                         <label>Jumlah Stok</label>

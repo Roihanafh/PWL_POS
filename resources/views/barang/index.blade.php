@@ -12,21 +12,19 @@
         </div>
     </div>
     <div class="card-body">
-    <!-- untuk Filter data -->
-        <div id="filter" class="form-horizontal filter-date p-2 border-bottom mb-2">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group form-group-sm row text-sm mb-0">
-                    <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
-                        <div class="col-md-3">
-                            <select name="filter_kategori" class="form-control form-control-sm filter_kategori">
+        <!-- untuk Filter data -->
+        <div class="row">
+            <div class="col-ms-12">
+                <div class="form-group row">
+                    <label class="col-4 control-label col-form-label">Filter :</label>
+                    <div class="col-8">
+                        <select name="kategori_id" id="kategori_id" class="form-control" required>
                             <option value="">- Semua -</option>
                             @foreach($kategori as $l)
                                 <option value="{{ $l->kategori_id }}">{{ $l->kategori_nama }}</option>
                             @endforeach
-                            </select>
-                            <small class="form-text text-muted">Kategori Barang</small>
-                        </div>
+                        </select>
+                        <small class="form-text text-muted">Kategori Barang</small>
                     </div>
                 </div>
             </div>
@@ -39,7 +37,7 @@
         @endif
         <table class="table table-bordered table-sm table-striped table-hover" id="table-barang">
         <thead>
-        <tr><th>No</th><th>Kode Barang</th><th>Kode Barang</th><th>Harga Beli</th><th>Harga Jual</th><th>Kategori</th><th>Aksi</th></tr>
+        <tr><th>No</th><th>Kode Barang</th><th>Nama Barang</th><th>Harga Beli</th><th>Harga Jual</th><th>Kategori</th><th>Aksi</th></tr>
         </thead>
         <tbody></tbody>
         </table>
@@ -64,14 +62,14 @@
                 "dataType": "json",
                 "type": "POST",
                 "data": function (d) {
-                    d.filter_kategori = $('.filter_kategori').val();
+                    d.kategori_id = $('#kategori_id').val();
                 }
             },
             columns: [{
-                    data: "DT_RowIndex",
+                    data: "barang_id",
                     className: "text-center",
                     width: "5%",
-                    orderable: false,
+                    orderable: true,
                     searchable: false
                 },{
                     data: "barang_kode",
@@ -117,13 +115,9 @@
                     searchable: false
             }]
         });
-        $('#table-barang_filter input').unbind().bind().on('keyup', function(e){
-            if(e.keyCode == 13){ // enter key
-                tableBarang.search(this.value).draw();
-            }
-        });
-        $('.filter_kategori').change(function(){
-            tableBarang.draw();
+
+        $('#kategori_id').change(function(){
+            tableBarang.ajax.reload();
         });
     });
 </script>

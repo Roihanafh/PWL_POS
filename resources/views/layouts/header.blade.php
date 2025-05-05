@@ -15,24 +15,6 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      @php
-          $foto = Auth::user()->foto ? asset('foto/' . Auth::user()->foto) : asset('default.png');  
-      @endphp
-
-      <!-- User Profile Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <img id="foto-profil" src="{{ $foto }}" alt="User Image" class="img-circle elevation-2" style="width:35px; height:35px; object-fit:cover;">
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">{{ Auth::user()->nama }}</span>
-          <div class="dropdown-divider"></div>
-          <button onclick="modalAction('{{ url('user/profil') }}')" class="dropdown-item">
-            <i class="fas fa-user mr-2"></i> Edit Foto Profil
-          </button>
-        </div>
-      </li>
-      
       <!-- Navbar Search -->
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -150,14 +132,39 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      @php
+          $foto = Auth::user()->foto ? asset('foto/' . Auth::user()->foto) : asset('default.png');  
+      @endphp
+
+      <!-- User Profile Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#" role="button">
+          <img id="foto-profil" src="{{ $foto }}" alt="User Image"
+              class="img-circle elevation-2 shadow" style="width:35px; height:35px; object-fit:cover;">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow">
+          <div class="dropdown-header text-center">
+            <strong>{{ Auth::user()->nama }}</strong>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a href="javascript:void(0)" onclick="modalAction('{{ url('user/profil') }}')" class="dropdown-item">
+            <i class="fas fa-user-edit mr-2 text-primary"></i> Ubah Foto Profil
+          </a>
+        </div>
+      </li>
     </ul>
   </nav>
   @push('js')
-    <script>
-        function modalAction(url = ''){
-                $('#myModal').load(url,function(){
-                $('#myModal').modal('show');
-            });
-        }
-    </script>
+  <script>
+    function modalAction(url = '') {
+        $('#myModal').load(url, function () {
+            $('#myModal').modal('show');
+        });
+    }
+
+    // Fungsi untuk mengganti foto profil secara dinamis
+    function updateFotoProfilBaru(urlFotoBaru) {
+        $('#foto-profil').attr('src', urlFotoBaru + '?' + new Date().getTime()); // tambahkan timestamp agar tidak cache
+    }
+</script>
   @endpush

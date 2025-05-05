@@ -53,7 +53,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            const newFotoUrl = '/foto/' + res.filename + '?t=' + new Date().getTime(); // tambahkan timestamp biar tidak cache
+                            const newFotoUrl = '{{ asset('foto') }}/' + response.filename + '?t=' + new Date().getTime();//tambahkan timestamp biar tidak cache
                             $('#foto-profil').attr('src', newFotoUrl);
                         } else {
                             $('.error-text').text('');
