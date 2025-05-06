@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\LogoutController;
 use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\TransaksiController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
@@ -54,3 +55,6 @@ Route::post('users', [UserController::class, 'store']);
 Route::get('users/{user}', [UserController::class, 'show']);
 Route::put('users/{user}', [UserController::class, 'update']);
 Route::delete('users/{user}', [UserController::class, 'destroy']);
+//transaksi
+Route::get('transaksi/{id}', [TransaksiController::class, 'show_api']);
+
