@@ -17,11 +17,11 @@ class UserController extends Controller
         return response()->json($user, 201);
     }
     public function show(UserModel $user){
-        return UserModel::find($user);
+        return response()->json($user);
     }
     public function update(Request $request, UserModel $user){
         $user->update($request->all());
-        return UserModel::find($user);
+        return response()->json($user);
     }
     public function destroy(UserModel $user){
         $user->delete();

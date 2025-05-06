@@ -17,11 +17,11 @@ class KategoriController extends Controller
         return response()->json($kategori, 201);
     }
     public function show(KategoriModel $kategori){
-        return KategoriModel::find($kategori);
+        return response()->json($kategori);;
     }
     public function update(Request $request, KategoriModel $kategori){
         $kategori->update($request->all());
-        return KategoriModel::find($kategori);
+        return response()->json($kategori);;
     }
     public function destroy(KategoriModel $kategori){
         $kategori->delete();

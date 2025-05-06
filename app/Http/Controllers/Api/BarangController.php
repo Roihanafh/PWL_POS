@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\BarangModel;
 use Illuminate\Http\Request;
+use App\Models\BarangModel;
 use Monolog\Barang;
 
 class BarangController extends Controller
@@ -17,11 +17,11 @@ class BarangController extends Controller
         return response()->json($barang, 201);
     }
     public function show(BarangModel $barang){
-        return BarangModel::find($barang);
+        return response()->json($barang);
     }
     public function update(Request $request, BarangModel $barang){
         $barang->update($request->all());
-        return BarangModel::find($barang);
+        return response()->json($barang);;
     }
     public function destroy(BarangModel $barang){
         $barang->delete();
